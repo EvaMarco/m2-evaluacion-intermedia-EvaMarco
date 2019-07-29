@@ -5,6 +5,7 @@ const btn = document.querySelector('.js__btn');
 const hint = document.querySelector('.js__hint');
 const triesOut = document.querySelector('.js__tries');
 const historic = document.querySelector('.js__historic');
+const btnReset = document.querySelector('.js__btn-reset');
 
 function getRandomNumber(max) {
     return Math.ceil(Math.random() * max);
@@ -16,6 +17,15 @@ let myRandomNumber = getRandomNumber(100);
 console.log(`Mi número aleatorio es ${myRandomNumber}`);
 
 let tries = parseInt(triesOut.innerHTML);
+
+function reset(event){
+    myRandomNumber = getRandomNumber(100);
+    console.log(`Mi número aleatorio es ${myRandomNumber}`);
+    historic.innerHTML += `<li> Reseteaste una partida </li>`; 
+    tries = 0;
+    triesOut.innerHTML = tries;
+    return myRandomNumber;
+}
 
 function getHint(event){
     const userNum = input.value;
@@ -41,3 +51,4 @@ function getHint(event){
 }
 
 btn.addEventListener('click', getHint);
+btnReset.addEventListener('click', reset);

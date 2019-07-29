@@ -46,6 +46,7 @@ body{
     box-shadow: none;
     background-color:white;
     font-size:20px;
+    margin-bottom:20px;
 }
 .hint__box{
     width: 100%;
