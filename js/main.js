@@ -4,13 +4,14 @@ const input = document.querySelector('.js__input');
 const btn = document.querySelector('.js__btn');
 const hint = document.querySelector('.js__hint');
 const triesOut = document.querySelector('.js__tries');
+const historic = document.querySelector('.js__historic');
 
 function getRandomNumber(max) {
     return Math.ceil(Math.random() * max);
 }
 
 
-const myRandomNumber = getRandomNumber(100);
+let myRandomNumber = getRandomNumber(100);
 
 console.log(`Mi número aleatorio es ${myRandomNumber}`);
 
@@ -29,9 +30,13 @@ function getHint(event){
         triesOut.innerHTML = tries;
     }
     else{
-        hint.innerHTML = `¡Has ganado!`
+        hint.innerHTML = `¡Has ganado, Campeona!`
         tries += 1;
         triesOut.innerHTML = tries;
+        historic.innerHTML += `<li>El numero a descubrir fue ${myRandomNumber} y tardaste ${tries} intentos en adivinarlo. </li>`
+        myRandomNumber = getRandomNumber(100);
+        console.log(`Mi número aleatorio es ${myRandomNumber}`);
+        tries = 0;
     }
 }
 

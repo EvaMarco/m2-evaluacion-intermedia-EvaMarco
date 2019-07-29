@@ -57,3 +57,15 @@ body{
     justify-content: center;
     align-items: center;
 }
+.footer__container{
+    padding:10px;
+    color:darkgreen;
+    border: solid 2px darkgreen;
+    background-color: lightgreen;
+}
+.footer__title{
+    text-decoration: underline;
+    text-decoration: uppercase;
+    margin:10px;
+
+}
