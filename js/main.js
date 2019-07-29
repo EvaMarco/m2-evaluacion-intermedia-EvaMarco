@@ -10,6 +10,7 @@ const btnClose = document.querySelector('.js__btnClose');
 const inputName = document.querySelector('.js__inputName');
 const modal = document.querySelector('.js__modal');
 let name = '';
+
 function getRandomNumber(max) {
     return Math.ceil(Math.random() * max);
 }
@@ -30,25 +31,38 @@ function reset(event){
 }
 
 function getHint(event){
-    const userNum = input.value;
-    if (userNum > myRandomNumber){
-        hint.innerHTML = `Su número es mayor que el número buscado`
-        tries += 1;
-        triesOut.innerHTML = tries;
+    console.log(input.value);
+    const userNum = parseInt(input.value);
+    console.log(userNum);
+
+    if (isNaN(userNum)){
+        hint.innerHTML = `Debes introducir un número en la caja.`
+        console.log('el numero no es válido');
     }
-    else if (userNum < myRandomNumber){
-        hint.innerHTML = `Su número es menor que el número buscado`
-        tries += 1;
-        triesOut.innerHTML = tries;
+    else if(userNum < 0 || userNum > 100){
+        hint.innerHTML = `Debes introducir un número entre el 0 y el 100.`
+        console.log('el numero o pequeño o grande');
     }
     else{
-        hint.innerHTML = `¡Has ganado, ${name}!`
-        tries += 1;
-        triesOut.innerHTML = tries;
-        historic.innerHTML += `<li>El numero a descubrir fue ${myRandomNumber} y tardaste ${tries} intentos en adivinarlo. Muy bien ${name}. </li>`
-        myRandomNumber = getRandomNumber(100);
-        console.log(`Mi número aleatorio es ${myRandomNumber}`);
-        tries = 0;
+        if (userNum > myRandomNumber){
+            hint.innerHTML = `Su número es mayor que el número buscado`
+            tries += 1;
+            triesOut.innerHTML = tries;
+        }
+        else if (userNum < myRandomNumber){
+            hint.innerHTML = `Su número es menor que el número buscado`
+            tries += 1;
+            triesOut.innerHTML = tries;
+        }
+        else{
+            hint.innerHTML = `¡Has ganado, ${name}!`
+            tries += 1;
+            triesOut.innerHTML = tries;
+            historic.innerHTML += `<li>El numero a descubrir fue ${myRandomNumber} y tardaste ${tries} intentos en adivinarlo. Muy bien ${name}. </li>`
+            myRandomNumber = getRandomNumber(100);
+            console.log(`Mi número aleatorio es ${myRandomNumber}`);
+            tries = 0;
+        }
     }
 }
 
