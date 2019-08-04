@@ -1,4 +1,4 @@
-'use strict'
+'use strict';
 
 const input = document.querySelector('.js__input');
 const btn = document.querySelector('.js__btn');
@@ -11,65 +11,57 @@ const inputName = document.querySelector('.js__inputName');
 const modal = document.querySelector('.js__modal');
 let name = '';
 
-function getRandomNumber(max) {
-    return Math.ceil(Math.random() * max);
-}
-
-function close(event){
-    name = inputName.value;
-    modal.classList.add('hidden');
-    return name
-}
-
-function reset(event){
-    myRandomNumber = getRandomNumber(100);
-    console.log(`Mi número aleatorio es ${myRandomNumber}`);
-    historic.innerHTML += `<li> Reseteaste una partida </li>`; 
-    tries = 0;
-    triesOut.innerHTML = tries;
-    return myRandomNumber;
-}
-
-function getHint(event){
-    console.log(input.value);
-    const userNum = parseInt(input.value);
-    console.log(userNum);
-
-    if (isNaN(userNum)){
-        hint.innerHTML = `Debes introducir un número en la caja.`
-        console.log('el numero no es válido');
-    }
-    else if(userNum < 0 || userNum > 100){
-        hint.innerHTML = `Debes introducir un número entre el 0 y el 100.`
-        console.log('el numero o pequeño o grande');
-    }
-    else{
-        if (userNum > myRandomNumber){
-            hint.innerHTML = `Su número es mayor que el número buscado`
-            tries += 1;
-            triesOut.innerHTML = tries;
-        }
-        else if (userNum < myRandomNumber){
-            hint.innerHTML = `Su número es menor que el número buscado`
-            tries += 1;
-            triesOut.innerHTML = tries;
-        }
-        else{
-            hint.innerHTML = `¡Has ganado, ${name}!`
-            tries += 1;
-            triesOut.innerHTML = tries;
-            historic.innerHTML += `<li>El numero a descubrir fue ${myRandomNumber} y tardaste ${tries} intentos en adivinarlo. Muy bien ${name}. </li>`
-            myRandomNumber = getRandomNumber(100);
-            console.log(`Mi número aleatorio es ${myRandomNumber}`);
-            tries = 0;
-        }
-    }
-}
-
 let myRandomNumber = getRandomNumber(100);
 let tries = parseInt(triesOut.innerHTML);
 
-console.log(`Mi número aleatorio es ${myRandomNumber}`);
+function getRandomNumber(max) {
+  return Math.ceil(Math.random() * max);
+}
+
+function close() {
+  name = inputName.value;
+  modal.classList.add('hidden');
+  return name;
+}
+
+function reset() {
+  myRandomNumber = getRandomNumber(100);
+  // eslint-disable-next-line no-console
+  console.log(`Mi número aleatorio es ${myRandomNumber}`);
+  historic.innerHTML += `<li> Reseteaste una partida </li>`;
+  tries = 0;
+  triesOut.innerHTML = tries;
+  return myRandomNumber;
+}
+
+function getHint() {
+  const userNum = parseInt(input.value);
+
+  if (isNaN(userNum)) {
+    hint.innerHTML = `Debes introducir un número en la caja.`;
+  }
+  else if (userNum < 0 || userNum > 100) {
+    hint.innerHTML = `Debes introducir un número entre el 0 y el 100.`;
+  }
+  else if (userNum > myRandomNumber) {
+    hint.innerHTML = `Su número es mayor que el número buscado`;
+    tries += 1;
+    triesOut.innerHTML = tries;
+  }
+  else if (userNum < myRandomNumber) {
+    hint.innerHTML = `Su número es menor que el número buscado`;
+    tries += 1;
+    triesOut.innerHTML = tries;
+  }
+  else {
+    hint.innerHTML = `¡Has ganado, ${name}!`;
+    tries += 1;
+    triesOut.innerHTML = tries;
+    historic.innerHTML += `<li>El numero a descubrir fue ${myRandomNumber} y tardaste ${tries} intentos en adivinarlo. Muy bien ${name}. </li>`;
+    myRandomNumber = getRandomNumber(100);
+    tries = 0;
+  }
+}
 
 btn.addEventListener('click', getHint);
 btnReset.addEventListener('click', reset);
