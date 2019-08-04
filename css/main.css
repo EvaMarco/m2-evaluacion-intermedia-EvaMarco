@@ -6,25 +6,59 @@ body{
     font-family: Arial, Helvetica, sans-serif;
 }
 .page__main{
+    background-image: url(../image/guess2.jpeg);
+    background-position: center;
+    background-size:cover;
+    background-repeat: no-repeat;
+    display:grid;
+    grid-template-columns: auto 1fr auto;
+    background-color: #eeeeee;
+    min-height: 100vh;
+    /* padding:40px; */
+}
+.difficult__box{
+    width: 200px;
+    height: 100vh;
+    border:solid 2px antiquewhite;
+    background-color: lightblue;
+}
+.easy{
+    display:grid;
+    grid-template-rows: repeat(20, 1fr);
+}
+.med{
+    display:grid;
+    grid-template-rows: repeat(10, 1fr);
+}
+.hard{
+    display:grid;
+    grid-template-rows: repeat(5, 1fr);
+}
+.game__board{
     display:flex;
     justify-content: space-between;
     align-items: center;
     flex-direction: column;
-    background-color: #eeeeee;
-    min-height: 100vh;
-    padding:40px;
 }
 .main__title{
     margin:40px;
     font-size: 50px;
 }
 .tries{
-    position:absolute;
-    top:20px;
-    right:20px;
+
     font-size:100px;
     color:red;
 }
+.try__box{
+    position:absolute;
+    top:20px;
+    left:220px;
+    background-color:lightblue;
+    padding:5px;
+    border-radius:5px;
+    border: solid 2px antiquewhite;
+}
+
 .main__subtitle{
     margin:30px;
 }
@@ -40,36 +74,57 @@ body{
     margin-bottom:20px;
 }
 .btn{
-    width:280px;
-    height:30px;
+    width:180px;
+    height:40px;
     border-radius: 5px;
     box-shadow: none;
     background-color:white;
     font-size:20px;
     margin-bottom:20px;
+    border: none;
 }
 .hint__box{
-    width: 100%;
+    width: 70%;
     height:100px;
     font-size:25px;
-    color:blue;
-    border:solid 2px blue;
+    border:solid 2px antiquewhite;
+    background-color: lightblue;
     display:flex;
     justify-content: center;
     align-items: center;
+    margin-bottom:20px;
 }
-.footer__container{
+.page__aside{
+    width: 300px;
+    height: 100vh;
+}
+.aside__container{
     padding:10px;
-    color:darkgreen;
-    border: solid 2px darkgreen;
-    background-color: lightgreen;
+    border-radius: 7px;
+    border: solid 2px antiquewhite;
+    background-color: lightblue;
+    height:100%;
+    font-size: 15px;
 }
-.footer__title{
+.aside__title{
     text-decoration: underline;
     text-decoration: uppercase;
     margin:10px;
 }
+.historic{
+    list-style: none;
+    padding:0;
+    margin:0;
+    text-decoration: none;
+}
+.list__item{
+    padding-bottom: 10px;
+}
 .modal__name{
+    background-image: url(../image/modal2.jpeg);
+    background-position: center;
+    background-size:cover;
+    background-repeat: no-repeat;
     font-size:20px;
     position:absolute;
     top:50%;
@@ -77,12 +132,12 @@ body{
     background-color: lightcoral;
     transform: translate(-50%, -50%);
     padding:20px;
-    display:flex;
-    justify-content: center;
+    display:flex; 
+    justify-content: space-around;
     align-items: center;
     flex-direction: column;
-    width:500px;
-    height:500px;
+    width:100vw;
+    height:100vh;
 }
 .btn-close{
     position:absolute;
@@ -90,6 +145,29 @@ body{
     right:0;
     width:30px;
     height:30px;
+}
+.modal__title{
+    font-size: 30px;
+    background-color: lightblue;
+    border:solid 2px antiquewhite;
+    border-radius: 7px;
+    padding:20px;
+}
+.diffic__box{
+    text-align: left;
+    background-color: lightblue;
+    border:solid 2px antiquewhite;
+    border-radius: 7px;
+    padding:20px;
+}
+.name__box{
+    background-color: lightblue;
+    border:solid 2px antiquewhite;
+    border-radius: 7px;
+    padding:20px;
+}
+.diff__title{
+    margin:10px;
 }
 .input__name{
     margin:20px;

@@ -8,29 +8,89 @@
     <link rel="stylesheet" href="css/main.css" />
   </head>
   <body>
-    <main class="page__main">
-        <div class="modal__name js__modal">
-            <label for="name">Introduce tu nombre</label>
-            <input type="text" name="name" id="name" class="input__name js__inputName">
-            <button class="btn btn-close js__btnClose">X</button>
+    <main class="page__main js__main">
+      <div class="modal__name js__modal">
+        <h2 class="modal__title">Guess the number</h2>
+        <div class="diffic__box">
+          <h3 class="diff__title">Escoge la dificultad del juego</h3>
+          <div class="diff1">
+            <input
+              type="radio"
+              name="name"
+              id="dif1"
+              class="input__dif js__diff1"
+              value="1"
+              checked
+            />
+            <label for="dif1">Dificultad baja</label>
+          </div>
+          <div class="diff2">
+            <input
+              type="radio"
+              name="name"
+              id="dif2"
+              class="input__dif js__diff2"
+              value="2"
+            />
+            <label for="dif1">Dificultad intermedia</label>
+          </div>
+          <div class="diff3">
+            <input
+              type="radio"
+              name="name"
+              id="dif3"
+              class="input__dif js__diff3"
+              value="3"
+            />
+            <label for="dif1">Dificultad alta</label>
+          </div>
         </div>
-      <p class="tries js__tries">0</p>
-      <h1 class="main__title">Adivina el número</h1>
-      <div class="container">
-        <label for="input" class="main__subtitle"> Introduce aquí tu número. </label>
-        <input type="number" name="input" id="input" class="input js__input" />
-        <button class="btn js__btn">Prueba</button>
-        <button class="btn btn-reset js__btn-reset">Empieza de nuevo</button>
-
+        <div class="name__box">
+          <label for="name">Introduce tu nombre.</label>
+          <input
+            type="text"
+            name="name"
+            id="name"
+            class="input__name js__inputName"
+          />
+        </div>
+        <button class="btn btn-close js__btnClose">X</button>
       </div>
-      <div class="hint__box js__hint">Escribe un número y dale a prueba</div>
-    </main>
-    <footer class="page__footer js__footer">
-        <div class="footer__container">
-            <h3 class="footer__title">Historial de partidas</h3>
-            <ul class="historic js__historic"></ul>
+      <section class="difficult__box js__diffBox easy">
+      </section>
+      <div class="game__board">
+        <div class="try__box js__tryBox hidden">
+          <p class="try__title">Intentos:</p>
+          <p class="tries js__tries"></p>
         </div>
-    </footer>
+        <h1 class="main__title">Adivina el número</h1>
+        <div class="container">
+          <label for="input" class="main__subtitle">
+            Introduce aquí tu número.
+          </label>
+          <input
+            type="number"
+            name="input"
+            id="input"
+            class="input js__input"
+          />
+          <button class="btn js__btn">Prueba</button>
+          <button class="btn btn-reset js__btn-reset">Empieza de nuevo</button>
+          <button class="btn btn-reset js__btn-new hidden">Otra partida</button>
+        </div>
+        <div class="hint__box js__hint">Escribe un número y dale a prueba</div>
+      </div>
+      <aside class="page__aside js__aside hidden">
+        <div class="aside__container">
+          <h3 class="aside__title">Historial de partidas</h3>
+          <ul class="historic js__historic"></ul>
+          <button class="btn historic__reset js__historic_reset">
+            Limpiar el historial
+          </button>
+        </div>
+      </aside>
+    </main>
+
     <script src="js/main.js"></script>
   </body>
 </html>
