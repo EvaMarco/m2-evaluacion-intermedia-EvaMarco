@@ -17,10 +17,9 @@ body{
     /* padding:40px; */
 }
 .difficult__box{
-    width: 200px;
+    width: 30px;
     height: 100vh;
     border:solid 2px antiquewhite;
-    background-color: lightblue;
 }
 .easy{
     display:grid;
@@ -45,14 +44,13 @@ body{
     font-size: 50px;
 }
 .tries{
-
     font-size:100px;
     color:red;
 }
 .try__box{
     position:absolute;
-    top:20px;
-    left:220px;
+    top:0;
+    left:30px;
     background-color:lightblue;
     padding:5px;
     border-radius:5px;

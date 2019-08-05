@@ -1,4 +1,5 @@
 'use strict';
+
 const main = document.querySelector('.js__main');
 const input = document.querySelector('.js__input');
 const btn = document.querySelector('.js__btn');
@@ -24,20 +25,27 @@ let myRandomNumber = getRandomNumber(100);
 let tries = 0;
 let maxtries = 19;
 let historicList = [];
-if(localStorage.getItem('resultList')===''){
-  historicList = [];
-}else{
-  historicList = JSON.parse(localStorage.getItem('resultList'));
-}
-
+let game ={
+  'name': '',
+  'tries': '',
+  'number': '',
+  'reset': '',
+  'win':''
+};
 function getRandomNumber(max) {
   return Math.ceil(Math.random() * max);
 }
 function init() {
+  maxDiv();
+  if(localStorage.getItem('historicList')){
+    historicList = [];
+  }else{
+    historicList = JSON.parse(localStorage.getItem('historicList'));
+  }
   // eslint-disable-next-line no-console
   console.log(`Mi número aleatorio es ${myRandomNumber}`);
-  if(localStorage.getItem('resultList') !== '' || localStorage.getItem('resultList') !== []){
-    const returnList = JSON.parse(localStorage.getItem('resultList'));
+  if(localStorage.getItem('historicList') !== '' && localStorage.getItem('historicList') !== [] && localStorage.getItem('historicList') !== null){
+    const returnList = JSON.parse(localStorage.getItem('historicList'));
     for (const item of returnList){
       if(item.reset === false){
         historic.innerHTML += `<li class="list__item">El numero a descubrir fue ${item.number} y tardaste ${item.tries} intentos en adivinarlo. Muy bien ${item.name}. </li>`;
@@ -50,8 +58,41 @@ function init() {
       }
     }
   }
-  maxDiv();
+}
+function maxDiv(){
+  for (let i = 1; i<=maxtries; i++){
+    diffBox.innerHTML +=`
+    <div class="try try${i}"></div>
+    `;
+  }
   tryArray = document.querySelectorAll('.try');
+}
+function changeDiff (event) {
+  if (event.currentTarget.value === '1') {
+    maxtries = 19;
+    diffBox.classList.remove('med');
+    diffBox.classList.remove('hard');
+    diffBox.classList.add('easy');
+  }
+  else if (event.currentTarget.value === '2') {
+    maxtries = 9;
+    diffBox.classList.remove('easy');
+    diffBox.classList.remove('hard');
+    diffBox.classList.add('med');
+  }
+  else if(event.currentTarget.value === '3'){
+    maxtries = 4;
+    diffBox.classList.remove('med');
+    diffBox.classList.remove('easy');
+    diffBox.classList.add('hard');
+  }
+  diffBox.innerHTML ='';
+  maxDiv();
+}
+function enterClose() {
+  if (event.keyCode === 13) {
+    close();
+  }
 }
 function close() {
   triesOut.innerHTML = tries;
@@ -61,9 +102,31 @@ function close() {
   name = inputName.value;
   return name;
 }
-function enterClose() {
+function enter() {
   if (event.keyCode === 13) {
-    close();
+    getHint();
+  }
+}
+function fillColor(){
+  let num = tries;
+  let color = 'red';
+  let randNum =  Math.floor(Math.random()*4 + 1);
+  if(randNum === 1){
+    color = 'red';
+  }
+  else if(randNum === 2){
+    color = 'green';
+  }
+  else if(randNum === 3){
+    color = 'yellow';
+  }
+  else{
+    color = 'blue';
+  }
+  for(const item of tryArray){
+    if(item.classList.contains(`try${num}`)){
+      item.style.backgroundColor = `${color}`;
+    }
   }
 }
 function getHint() {
@@ -83,6 +146,7 @@ function getHint() {
       tries += 1;
       triesOut.innerHTML = tries;
       fillColor();
+      input.value = '';
     }
     else if (userNum < myRandomNumber) {
       hint.innerHTML = `Demasiado bajo`;
@@ -90,43 +154,55 @@ function getHint() {
       tries += 1;
       triesOut.innerHTML = tries;
       fillColor();
+      input.value = '';
     }
     else {
       hint.innerHTML = `¡Has ganado, ${name}!`;
       main.style.backgroundImage = 'url(../image/win.jpeg)';
-      // tries += 1;
-      // triesOut.innerHTML = tries;
+      tries += 1;
+      triesOut.innerHTML = tries;
       historic.innerHTML += `<li class="list__item">El numero a descubrir fue ${myRandomNumber} y tardaste ${tries} intentos en adivinarlo. Muy bien ${name}. </li>`;
-      const game ={
+      game ={
         'name': name,
         'tries': tries,
         'number': myRandomNumber,
         'reset': false,
         'win':true
       };
-      historicList.push(game);
-      localStorage.setItem('resultList', JSON.stringify(historicList));
+      if(historicList === null){
+        historicList = [game];
+        localStorage.setItem('historicList', JSON.stringify(historicList));
+      }
+      else{
+        historicList.push(game);
+        localStorage.setItem('historicList', JSON.stringify(historicList));
+      }
       myRandomNumber = getRandomNumber(100);
       tries = 0;
       btnNew.classList.toggle('hidden');
+      btnReset.classList.toggle('hidden');
+      input.value = '';
     }
   }else{
     main.style.backgroundImage = 'url(../image/gameover.jpeg)';
     hint.innerHTML = `Has perdido, ${name}!`;
     historic.innerHTML += `<li class="list__item">El numero a descubrir fue ${myRandomNumber} y ${name} no consiguió descubrirlo. ¡Seguro que a la siguiente sí!. </li>`;
-    const game ={
+    tries += 1;
+    triesOut.innerHTML = tries;
+    game ={
       'name': name,
       'tries': tries,
       'number': myRandomNumber,
       'reset': false,
       'win':false
     };
-    tries += 1;
-    triesOut.innerHTML = tries;
     historicList.push(game);
-    localStorage.setItem('resultList', JSON.stringify(historicList));
+    localStorage.setItem('historicList', JSON.stringify(historicList));
     fillColor();
     btnNew.classList.toggle('hidden');
+    btnReset.classList.toggle('hidden');
+    tries = 0;
+    input.value = '';
   }
 }
 function reset() {
@@ -139,7 +215,7 @@ function reset() {
   tries = 0;
   triesOut.innerHTML = tries;
   input.value = ``;
-  const game ={
+  game ={
     'name': name,
     'tries': tries,
     'number': myRandomNumber,
@@ -147,7 +223,7 @@ function reset() {
     'win': false
   };
   historicList.push(game);
-  localStorage.setItem('resultList', JSON.stringify(historicList));
+  localStorage.setItem('historicList', JSON.stringify(historicList));
   diffBox.innerHTML ='';
   maxDiv();
   return myRandomNumber;
@@ -162,84 +238,14 @@ function newGame() {
   triesOut.innerHTML = tries;
   input.value = ``;
   btnNew.classList.toggle('hidden');
+  btnReset.classList.toggle('hidden');
   diffBox.innerHTML ='';
   maxDiv();
-  if(hint.innerHTML ===`¡Has ganado, ${name}!`){
-    const game ={
-      'name': name,
-      'tries': tries,
-      'number': myRandomNumber,
-      'reset':false,
-      'win': true
-    };
-    historicList.push(game);
-    localStorage.setItem('resultList', JSON.stringify(historicList));
-  }
-  else{
-    const game ={
-      'name': name,
-      'tries': tries,
-      'number': myRandomNumber,
-      'reset':false,
-      'win': false
-    };
-    historic.innerHTML += `<li class="list__item">El numero a descubrir fue ${myRandomNumber} y ${name} no consiguió descubrirlo. ¡Seguro que a la siguiente sí!. </li>`;
-    historicList.push(game);
-    localStorage.setItem('resultList', JSON.stringify(historicList));
-  }
   return myRandomNumber;
 }
-function enter() {
-  if (event.keyCode === 13) {
-    getHint();
-  }
-}
-function fillColor(){
-  let num = tries -1;
-  let color = Math.floor(Math.random() * 16777216).toString(16);
-  for(const item of tryArray){
-    if(item.classList.contains(`try${num}`)){
-      item.style.backgroundColor = `#${color}`;
-    }
-  }
-}
-function maxDiv(){
-  for (let i = 0; i<=maxtries; i++){
-    diffBox.innerHTML +=`
-    <div class="try try${i}"></div>
-    `;
-  }
-}
-function changeDiff (event) {
-  if (event.currentTarget.value === '1') {
-    maxtries = 19;
-    diffBox.classList.remove('med');
-    diffBox.classList.remove('hard');
-    diffBox.classList.add('easy');
-  }
-  else if (event.currentTarget.value === '2') {
-    maxtries = 9;
-    diffBox.classList.remove('easy');
-    diffBox.classList.remove('hard');
-    diffBox.classList.add('med');
-    diffBox.innerHTML ='';
-    maxDiv();
-    tryArray = document.querySelectorAll('.try');
-  }
-  else if(event.currentTarget.value === '3'){
-    maxtries = 4;
-    diffBox.classList.remove('med');
-    diffBox.classList.remove('easy');
-    diffBox.classList.add('hard');
-    diffBox.innerHTML ='';
-    maxDiv();
-    tryArray = document.querySelectorAll('.try');
-
-  }
-}
 function cleanHistoric(){
+  localStorage.removeItem('historicList');
   historicList =[];
-  localStorage.setItem('resultList',JSON.stringify(historicList) );
   historic.innerHTML = '';
 }
 
